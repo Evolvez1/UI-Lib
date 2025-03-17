@@ -5,7 +5,7 @@ local camera = workspace.CurrentCamera
 local cache = {}
 
 --// Settings
-local ESP_SETTINGS = {
+local Item_ESP_SETTINGS = {
     -- Add model name directly in the settings table
     TargetModelName = "YourModelNameHere",  -- Replace this with your model's name
     BoxOutlineColor = Color3.new(0, 0, 0),
