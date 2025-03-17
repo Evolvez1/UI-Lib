@@ -5,7 +5,7 @@ local camera = workspace.CurrentCamera
 local cache = {}
 
 --// Settings
-local ESP_SETTINGS = {  -- Rename Item_ESP_SETTINGS_Main to ESP_SETTINGS
+local Item_ESP_SETTINGS_Main = {  -- Keep the original name as Item_ESP_SETTINGS_Main
     -- Add model name directly in the settings table
     TargetModelName = "YourModelNameHere",  -- Replace this with your model's name
     BoxOutlineColor = Color3.new(0, 0, 0),
@@ -39,24 +39,24 @@ end
 local function createEsp(model)
     local esp = {
         boxOutline = create("Square", {
-            Color = ESP_SETTINGS.BoxOutlineColor,
+            Color = Item_ESP_SETTINGS_Main.BoxOutlineColor,  -- Use Item_ESP_SETTINGS_Main here
             Thickness = 3,
             Filled = false
         }),
         box = create("Square", {
-            Color = ESP_SETTINGS.BoxColor,
+            Color = Item_ESP_SETTINGS_Main.BoxColor,  -- Use Item_ESP_SETTINGS_Main here
             Thickness = 1,
             Filled = false
         }),
         name = create("Text", {
-            Color = ESP_SETTINGS.NameColor,
+            Color = Item_ESP_SETTINGS_Main.NameColor,  -- Use Item_ESP_SETTINGS_Main here
             Outline = true,
             Center = true,
             Size = 13
         }),
         healthOutline = create("Line", {
             Thickness = 3,
-            Color = ESP_SETTINGS.HealthOutlineColor
+            Color = Item_ESP_SETTINGS_Main.HealthOutlineColor  -- Use Item_ESP_SETTINGS_Main here
         }),
         health = create("Line", {
             Thickness = 1
@@ -68,8 +68,8 @@ local function createEsp(model)
             Center = true
         }),
         tracer = create("Line", {
-            Thickness = ESP_SETTINGS.TracerThickness,
-            Color = ESP_SETTINGS.TracerColor,
+            Thickness = Item_ESP_SETTINGS_Main.TracerThickness,  -- Use Item_ESP_SETTINGS_Main here
+            Color = Item_ESP_SETTINGS_Main.TracerColor,  -- Use Item_ESP_SETTINGS_Main here
             Transparency = 1
         }),
         boxLines = {},
@@ -92,7 +92,7 @@ end
 local function updateEsp()
     for model, esp in pairs(cache) do
         local character = model
-        if character and ESP_SETTINGS.Enabled then
+        if character and Item_ESP_SETTINGS_Main.Enabled then  -- Use Item_ESP_SETTINGS_Main here
             local primaryPart = character.PrimaryPart
             if primaryPart then
                 local position, onScreen = camera:WorldToViewportPoint(primaryPart.Position)
@@ -102,21 +102,21 @@ local function updateEsp()
                     local boxSize = Vector2.new(math.floor(charSize * 1.8), math.floor(charSize * 1.9))
                     local boxPosition = Vector2.new(math.floor(hrp2D.X - charSize * 1.8 / 2), math.floor(hrp2D.Y - charSize * 1.6 / 2))
 
-                    if ESP_SETTINGS.ShowName and ESP_SETTINGS.Enabled then
+                    if Item_ESP_SETTINGS_Main.ShowName and Item_ESP_SETTINGS_Main.Enabled then  -- Use Item_ESP_SETTINGS_Main here
                         esp.name.Visible = true
                         esp.name.Text = model.Name
                         esp.name.Position = Vector2.new(boxSize.X / 2 + boxPosition.X, boxPosition.Y - 16)
-                        esp.name.Color = ESP_SETTINGS.NameColor
+                        esp.name.Color = Item_ESP_SETTINGS_Main.NameColor  -- Use Item_ESP_SETTINGS_Main here
                     else
                         esp.name.Visible = false
                     end
 
-                    if ESP_SETTINGS.ShowBox and ESP_SETTINGS.Enabled then
+                    if Item_ESP_SETTINGS_Main.ShowBox and Item_ESP_SETTINGS_Main.Enabled then  -- Use Item_ESP_SETTINGS_Main here
                         esp.boxOutline.Size = boxSize
                         esp.boxOutline.Position = boxPosition
                         esp.box.Size = boxSize
                         esp.box.Position = boxPosition
-                        esp.box.Color = ESP_SETTINGS.BoxColor
+                        esp.box.Color = Item_ESP_SETTINGS_Main.BoxColor  -- Use Item_ESP_SETTINGS_Main here
                         esp.box.Visible = true
                         esp.boxOutline.Visible = true
                     else
@@ -124,7 +124,7 @@ local function updateEsp()
                         esp.boxOutline.Visible = false
                     end
 
-                    if ESP_SETTINGS.ShowDistance and ESP_SETTINGS.Enabled then
+                    if Item_ESP_SETTINGS_Main.ShowDistance and Item_ESP_SETTINGS_Main.Enabled then  -- Use Item_ESP_SETTINGS_Main here
                         local distance = (camera.CFrame.p - primaryPart.Position).Magnitude
                         esp.distance.Text = string.format("%.1f studs", distance)
                         esp.distance.Position = Vector2.new(boxPosition.X + boxSize.X / 2, boxPosition.Y + boxSize.Y + 5)
@@ -133,11 +133,11 @@ local function updateEsp()
                         esp.distance.Visible = false
                     end
 
-                    if ESP_SETTINGS.ShowTracer and ESP_SETTINGS.Enabled then
+                    if Item_ESP_SETTINGS_Main.ShowTracer and Item_ESP_SETTINGS_Main.Enabled then  -- Use Item_ESP_SETTINGS_Main here
                         local tracerY
-                        if ESP_SETTINGS.TracerPosition == "Top" then
+                        if Item_ESP_SETTINGS_Main.TracerPosition == "Top" then
                             tracerY = 0
-                        elseif ESP_SETTINGS.TracerPosition == "Middle" then
+                        elseif Item_ESP_SETTINGS_Main.TracerPosition == "Middle" then
                             tracerY = camera.ViewportSize.Y / 2
                         else
                             tracerY = camera.ViewportSize.Y
@@ -168,9 +168,9 @@ end
 
 -- Automatically create ESP for model in workspace based on the name from settings
 local function addTargetModelEsp()
-    if ESP_SETTINGS.TargetModelName and ESP_SETTINGS.TargetModelName ~= "" then
+    if Item_ESP_SETTINGS_Main.TargetModelName and Item_ESP_SETTINGS_Main.TargetModelName ~= "" then  -- Use Item_ESP_SETTINGS_Main here
         for _, model in ipairs(workspace:GetChildren()) do
-            if model.Name == ESP_SETTINGS.TargetModelName then
+            if model.Name == Item_ESP_SETTINGS_Main.TargetModelName then  -- Use Item_ESP_SETTINGS_Main here
                 createEsp(model)
             end
         end
@@ -191,4 +191,4 @@ game:GetService("RunService").RenderStepped:Connect(updateEsp)
 -- Call addTargetModelEsp to apply ESP for the model in the settings when the script starts
 addTargetModelEsp()
 
-return ESP_SETTINGS
+return Item_ESP_SETTINGS_Main  -- Return the correct settings table
